@@ -14,8 +14,8 @@ class StartMenu extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private String[] options = {"Name", "Department"};
-	private String[] answers = new String[options.length];	
-	private JTextField[] fields = new JTextField[answers.length];
+	private String[] data = new String[options.length];	
+	private JTextField[] fields = new JTextField[data.length];
 	private JLabel headerLabel;
 	private JLabel descriptionLabel;
 	private JPanel controlPanel;
@@ -24,7 +24,7 @@ class StartMenu extends JFrame {
 	private String TITLE;
 	private int WIDTH;
 	private int HEIGHT;
-	private String descriptionString = "<html>Welcome to the Aptitude Test! <br> This test consists of 60 questions. <br> You have 30 minutes to complete this test.<br><br> But first, please fill in the form below.</html>";
+	private String descriptionString = "<html>Welcome to the " + MainMenu.NAME + " Aptitude Test! <br> This test consists of 60 questions. <br> You have 30 minutes to complete this test.<br><br> But first, please fill in the form below.</html>";
 	
 	public StartMenu(String TITLE, int WIDTH, int HEIGHT) {
 		super(TITLE);
@@ -44,35 +44,47 @@ class StartMenu extends JFrame {
 		setVisible(true);	
 	}
 	
+	//Clean inputs
+	private String sanitise(String str) {
+		str = str.trim().replace("^[a-zA-Z0-9 ]", "");
+		return str;
+	}
+	
+	
+	//Start the quiz, only happens if all data is present in the textfields and the start button is pressed.
 	private void initQuiz() {
+		
+		//Pass the questions data txt file and the pictures data txt file to the IQTest
 		IQTest test = new IQTest(new File("res/questions.txt"), new File("res/pictures.txt"));
+		
+		//Initialise the test
 		test.init();
-		new QuestionMenu(test, TITLE, WIDTH, HEIGHT);
 		
-		for(int i = 0;i < fields.length;i++)
-			answers[i] = fields[i].getText();
+		//clean the inputs and overwrite their place in the data array
+		for(int i = 0;i < fields.length;i++) {
+			String datum = fields[i].getText();
+			datum = sanitise(datum);
+			data[i] = datum;
+		}
 		
-		for(int i = 0;i < answers.length;i++)
-			System.out.println(answers[i]);
+		//Start up the question menu
+		new QuestionMenu(test, TITLE, WIDTH, HEIGHT, data);
 	}
 	
 
 	private void initLayout() {
+		controlPanel = new JPanel();
+		formPanel = new JPanel();
 		
-
+		controlPanel.setLayout(new FlowLayout());
+		formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
 		
 		setLayout(new GridLayout(4,1));
 		
-		controlPanel = new JPanel();	
-		controlPanel.setLayout(new FlowLayout());
-		
-		
+		headerLabel = new JLabel(MainMenu.logo, JLabel.CENTER);
 		descriptionLabel = new JLabel(descriptionString, JLabel.CENTER);
-		headerLabel = new JLabel("", JLabel.CENTER);
-		
-		formPanel = new JPanel();
-		formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
-		
+			
+		//Add textfields with data specified in options array, for example you might want the name of the person taking the test, so this loop creates the required boxes and will pass the data to save it with the results of the test
 		for(int i = 0;i < options.length;i++) {
 			JPanel panel = new JPanel();
 			
@@ -88,6 +100,8 @@ class StartMenu extends JFrame {
 			formPanel.add(panel);
 		}
 		
+		
+		//Add next and back buttons so user can flick through the test
 		JButton nextButton = new JButton("Next");
 		JButton backButton = new JButton("Back");
 		
@@ -118,19 +132,22 @@ class StartMenu extends JFrame {
 					boolean complete = true;
 					int i = 0;
 					
+					
+					//Goes through the panel and checks if all the textfields are filled in, if they are then the test will proceed.
+					
 					outerLoop:
 					for(Component c: formPanel.getComponents())
 						if(c instanceof JPanel) 
 							for(Component cp: ((JPanel) c).getComponents())
 								if(cp instanceof JTextField) {
-									answers[i] = ((JTextField) cp).getText();
-									if(answers[i].isEmpty()) {
+									data[i] = ((JTextField) cp).getText(); //puts textfield data into array at slot i
+									if(data[i].isEmpty()) { //if the box is empty then it breaks out of the loop and doesn't start the test
 										complete = false;
 										break outerLoop;
 									}
 									i++;
 								}
-					if(complete)
+					if(complete) //if all fields are complete, then continue.
 						initQuiz();
 				}
 					break;

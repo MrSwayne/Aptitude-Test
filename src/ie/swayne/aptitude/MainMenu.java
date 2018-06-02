@@ -10,15 +10,15 @@ class MainMenu extends JFrame {
 
 	private static final long serialVersionUID = 2327668447005881223L;
 	
-	protected static final String TITLE = "Aptitude Test";
+	protected final static String NAME = "";
+
+	protected static final String TITLE = NAME + " - Aptitude Test";
 	protected final int WIDTH;
 	protected final int HEIGHT;
 	
-	protected static ImageIcon logo = new ImageIcon("");
-	
-	
-	private JPanel controlPanel;
-	
+	protected static ImageIcon logo = new ImageIcon("res/logo.png");
+
+	private JPanel controlPanel;	
 	private JLabel headerLabel;
 	private JLabel statusLabel;
 	
@@ -26,8 +26,6 @@ class MainMenu extends JFrame {
 	private JButton settingsButton;
 	
 	public static boolean IS_RUNNING = false;
-	
-	
 	
 	public MainMenu() {
 		super(TITLE);
@@ -47,30 +45,35 @@ class MainMenu extends JFrame {
 		setVisible(true);	
 	}
 	
-	private void initMainLayout() {
+	private void initMainLayout() {	
+		controlPanel = new JPanel();
 		
+		//Add grid layout, top layer consists of the logo (headerLabel), the middle layer is the control panel (buttons which control navigation) and bottom layer is a statusLabel (Can be used to show messages or whatever)	
 		setLayout(new GridLayout(3,1));	
 		headerLabel = new JLabel(logo, JLabel.CENTER);
-		statusLabel = new JLabel("", JLabel.CENTER);
+		statusLabel = new JLabel("Insert status", JLabel.CENTER);
 		
-		controlPanel = new JPanel();
-		controlPanel.setLayout(new FlowLayout());
 		
-		add(headerLabel);
-		add(controlPanel);
-		add(statusLabel);
 		
+		
+
+		//Config for the Start and Settings button
 		startButton = new JButton("Start");
-		settingsButton = new JButton("Settings");
-		
-		controlPanel.add(startButton);
-		controlPanel.add(settingsButton);
+		settingsButton = new JButton("Settings");	
 		
 		startButton.setActionCommand("Start");
 		settingsButton.setActionCommand("Settings");
 		
 		startButton.addActionListener(new ButtonClickListener());
 		settingsButton.addActionListener(new ButtonClickListener());
+		
+		controlPanel.setLayout(new FlowLayout());
+		controlPanel.add(startButton);
+		controlPanel.add(settingsButton);
+		
+		add(headerLabel);
+		add(controlPanel);
+		add(statusLabel);
 	}
 	
 	private void start() {
@@ -81,6 +84,8 @@ class MainMenu extends JFrame {
 		
 	}
 	
+	
+	//If start button is clicked, start the test, if settings is clicked, open settings menu
 	private class ButtonClickListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {

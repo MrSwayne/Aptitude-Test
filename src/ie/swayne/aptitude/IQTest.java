@@ -8,11 +8,13 @@ class IQTest {
 	private ArrayList<String> categories;
 	private File questionsFile;
 	private File picturesFile;
+	private boolean goingForwards;
 	private int index;
 
 	public IQTest(File questionsFile, File picturesFile) {
 		questions = new ArrayList<Question>();
 		this.questionsFile = questionsFile;
+		goingForwards = true;
 		this.picturesFile = picturesFile;
 	}
 
@@ -55,7 +57,6 @@ class IQTest {
 				pictureQuestion.parse(question);
 				
 				questions.set(pictureQuestion.getQuestionNumber() - 1, pictureQuestion);
-				//iterateQuestions();
 			}	
 		} catch (FileNotFoundException e) {
 			
@@ -63,12 +64,16 @@ class IQTest {
 		}
 	}
 	
-	private void iterateQuestions() {
-		for(int i = 0;i < questions.size();i++) {
-			System.out.println(i + ": " + (questions.get(i) instanceof PictureQuestion));
-		}
+	public void setForwards(boolean b) {
+		
+		if(b == true && goingForwards == false)
+			index++;
+		else if(b == false && goingForwards == true)
+			index--;
+
+		goingForwards = b;
 	}
-	
+
 	public Question get(int i) {
 		i--;
 		if(i >= 0 && i < questions.size()) {
@@ -76,12 +81,18 @@ class IQTest {
 		}
 		return null;
 	}
+	
+	public boolean isGoingForwards() {
+		return goingForwards;
+	}
 
 	public Question getNext() {
+		goingForwards = true;
 		return questions.get(index++);
 	}
 	
 	public Question getPrevious() {
+		goingForwards = false;
 		return questions.get(--index);
 	}
 	public boolean hasNext() {
