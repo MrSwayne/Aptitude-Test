@@ -10,13 +10,7 @@ public class Main {
 		LoginGUI login = new LoginGUI();
 		LoginController lc = new LoginController();
 		lc.addView(login);
-		
-		
-		SFrame frame2 = new SFrame("test2");
-		LoginGUI login2 = new LoginGUI();
-		lc.addView(login2);
-		frame2.addMenu("login", login2);
-		
+
 		frame.addMenu("login", login);
 	}
 }
