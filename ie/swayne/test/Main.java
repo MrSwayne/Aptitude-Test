@@ -12,5 +12,15 @@ public class Main {
 		lc.addView(login);
 
 		frame.addMenu("login", login);
+		
+		
+		//Code to make sure the program exits gracefully
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				//TODO
+				System.out.println("Shutdown hook is running");
+			}
+		});
+		
 	}
 }

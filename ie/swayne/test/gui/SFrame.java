@@ -2,9 +2,12 @@ package ie.swayne.test.gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.TreeMap;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class SFrame extends JFrame {
 	
@@ -27,6 +30,19 @@ public class SFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
+		
+		//Are you sure you want to quit?
+		/*this.addWindowListener(new WindowAdapter() {
+			
+			public void windowClosing(WindowEvent e) {
+				int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?");
+				if(i == 0)
+					System.exit(0);
+			}
+			
+			
+		});*/
+		
 	}
 
 
