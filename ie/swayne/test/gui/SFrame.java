@@ -9,6 +9,8 @@ import java.util.TreeMap;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import ie.swayne.test.core.MenuSwitcher;
+
 public class SFrame extends JFrame {
 	
 	private TreeMap<String, GUI> menus;
@@ -20,6 +22,7 @@ public class SFrame extends JFrame {
 	
 	public SFrame(String title) {
 		super(title);
+		MenuSwitcher.setFrame(this);
 		menus = new TreeMap<>();
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -45,10 +48,9 @@ public class SFrame extends JFrame {
 		
 	}
 
-
-	public void addMenu(String name, GUI menu) {
-		menus.put(name, menu);
-		if(menus.size() == 1)	setMenu(name);
+	public void addMenu(String name, GUI menu) {	
+		if(menu != null && name != null &! name.isEmpty()) 	menus.put(name, menu);
+		if(menus.size() == 1)	                           	setMenu(name);
 	}
 	
 	public void setMenu(String name) {
@@ -59,6 +61,7 @@ public class SFrame extends JFrame {
 		
 		if(container != null) {
 			this.add(container);
+			this.pack();
 			this.revalidate();
 			this.repaint();
 		}

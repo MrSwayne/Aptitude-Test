@@ -6,6 +6,7 @@ import java.util.ListIterator;
 import java.util.TreeMap;
 
 import ie.swayne.test.core.Globals;
+import ie.swayne.test.core.SettingsManager;
 import ie.swayne.test.gui.GUI;
 import ie.swayne.test.gui.LoginGUI;
 import ie.swayne.test.gui.components.SButton;
@@ -32,7 +33,8 @@ public class LoginController extends Controller {
 		if(e.getSource() instanceof SButton) {
 			SButton source = (SButton) e.getSource();
 			if(checkCredentials(source.getParent().getParent().getParent())) {
-				notifyViews("Login succesful");
+				SettingsManager.setSetting("name", SettingsManager.getSetting("name") + "2");
+				notifyViews(SettingsManager.getSetting("name"));
 			}
 		}
 		else
@@ -40,6 +42,9 @@ public class LoginController extends Controller {
 	}
 	
 	public boolean checkCredentials(Container container) {
+		//TODO
+		if(container != null) return true;
+		
 		if(container instanceof LoginGUI) {
 			LoginGUI gui = (LoginGUI) container;
 			TreeMap<String, String> map = gui.getDetails();
@@ -52,8 +57,7 @@ public class LoginController extends Controller {
 			SQLHelper db = SQLHelper.getInstance();
 			Query query = db.executeQuery(sql);
 			System.out.println(query.toString());
-			
-			notifyViews("DONNO");
+			return true;
 		}
 		System.err.println("INCORRECT GUI PASSED TO CHECK CREDENTIALS");
 		return false;

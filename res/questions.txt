@@ -1,0 +1,6 @@
+!! Contains List of questions and answers
+!! questionNumber,category,question,answer,correctAnswer
+!! Example sample below vv
+
+1"maths"17 + 47 = 7 + ?"55-57-65-67-35"B
+38"mechanical"If gear X turns clockwise at a constant speed of 10RPM. How much does gear Y turn?"Anti c/w 10rpm-c/w 10rpm-c/w 5rpm-Anti c/w 5rpm-c/w 20rpm"B

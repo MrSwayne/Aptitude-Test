@@ -23,6 +23,7 @@ public abstract class Controller implements ActionListener {
 		ListIterator it = views.listIterator();
 		while(it.hasNext())
 			((GUI)it.next()).setMessage(message);
+		System.out.println("Notify: " + message);
 	}
 	
 	/*
