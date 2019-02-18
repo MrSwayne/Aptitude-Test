@@ -9,6 +9,7 @@ import ie.swayne.test.core.Globals;
 import ie.swayne.test.core.SettingsManager;
 import ie.swayne.test.gui.GUI;
 import ie.swayne.test.gui.LoginGUI;
+import ie.swayne.test.gui.TestGUI;
 import ie.swayne.test.gui.components.SButton;
 import ie.swayne.test.sql.Query;
 import ie.swayne.test.sql.SQLHelper;
@@ -33,8 +34,8 @@ public class LoginController extends Controller {
 		if(e.getSource() instanceof SButton) {
 			SButton source = (SButton) e.getSource();
 			if(checkCredentials(source.getParent().getParent().getParent())) {
-				SettingsManager.setSetting("name", SettingsManager.getSetting("name") + "2");
-				notifyViews(SettingsManager.getSetting("name"));
+				TestGUI test = new TestGUI();
+				
 			}
 		}
 		else

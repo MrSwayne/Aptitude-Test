@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;
 
-public class TestQuestion implements Serializable {
+public class TestQuestion implements Serializable, Comparable {
 	
 	protected String question;
 	protected String[] answers;
@@ -60,6 +60,16 @@ public class TestQuestion implements Serializable {
 		return this.selectedAnswers;
 	}
 	
+	public void pushAnswer(String ans) {
+		if(!selectedAnswers.contains(ans))
+			selectedAnswers.push(ans);
+	}
+	
+	public void popAnswer(String ans) {
+		if(selectedAnswers.contains(ans))
+			selectedAnswers.remove(ans);
+	}
+	
 	public void setMarks(int marks) {
 		this.marks = marks;
 	}
@@ -69,6 +79,11 @@ public class TestQuestion implements Serializable {
 	}
 	
 	public String toString() {
-		return this.category + "," + this.question;
+		return this.getClass().getName() + "," + this.category + "," + this.question;
+	}
+
+	@Override
+	public int compareTo(Object obj) {
+		return(this.toString().compareTo(obj.toString()));
 	}
 }

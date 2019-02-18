@@ -15,8 +15,6 @@ public class TestGUI extends GUI {
 		backBtn = new SButton("Back", Globals.RC_BACK);
 		buttonPanel.add(nextBtn);
 		buttonPanel.add(backBtn);
-		
-		
 	}
 	
 	
@@ -29,8 +27,6 @@ public class TestGUI extends GUI {
 			backBtn.addActionListener(listen);
 		} else {
 			throw new IllegalArgumentException(RC_CODE + " is invalid");
-		}
-		
+		}	
 	}
-
 }
