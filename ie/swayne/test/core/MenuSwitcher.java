@@ -3,9 +3,14 @@ package ie.swayne.test.core;
 import ie.swayne.test.gui.GUI;
 import ie.swayne.test.gui.SFrame;
 
-public class MenuSwitcher {
+public final class MenuSwitcher {
 
 	private static SFrame instance = null;
+	
+	
+	private MenuSwitcher() {
+	}
+	
 	
 	public static void setFrame(SFrame ins) {
 		instance = ins;
